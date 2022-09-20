@@ -1,9 +1,12 @@
+import os
 import psycopg
 import argparse
 
 class Schemaverse(object):
     def __enter__(self):
-        self.connection = psycopg.connect("host=db.schemaverse.com dbname=schemaverse user= password=")
+        username = os.environ.get("SHIP_USERNAME")
+        password = os.environ.get("SHIP_PASSWORD")
+        self.connection = psycopg.connect(host='db.schemaverse.com', dbname='schemaverse', user=username, password=password)
         self.connection.autocommit = True
         return self
 
